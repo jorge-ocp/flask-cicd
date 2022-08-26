@@ -10,6 +10,7 @@ pipeline {
         stage('Start Container for Testing') {
             steps {
                 script {
+                    sh 'docker --version'
                     sh 'docker-compose rm -f; docker-compose up -d images'
                 }
             }
