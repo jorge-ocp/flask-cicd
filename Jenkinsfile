@@ -37,7 +37,7 @@ pipeline {
             }
         }
 
-        stage {
+        stage('Buld Image') {
             steps {
                 script {
                     customImage = docker.build(imageName)
