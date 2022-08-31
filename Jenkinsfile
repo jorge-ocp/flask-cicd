@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     sh 'docker --version'
-                    sh 'sudo -s docker-compose rm -f; sudo -s docker-compose up -d images'
+                    sh 'docker-compose rm -f; docker-compose up -d images'
                 }
             }
         }
