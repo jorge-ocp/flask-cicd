@@ -19,7 +19,7 @@ pipeline {
         stage('Run Tests'){
             steps {
                 script {
-                    sh 'pip3 install -r requirements.txt; python3 -m pytest /app/test.py'
+                    sh 'pip3 install -r requirements.txt; python3 -m pytest test'
                 }
             }
 
