@@ -26,13 +26,13 @@ pipeline {
             post {
                 success {
                     script {
-                        sh 'docker-compose down'
+                        sh 'sudo docker-compose down'
                     }
                 }
 
                 failure {
                     script {
-                        sh 'docker-compose down'
+                        sh 'sudo docker-compose down'
                     }
                 }
             }
