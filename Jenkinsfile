@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        imageName = "jocptwo/flask-demo-app:{env.BUILD_ID}"
+        imageName = "jocptwo/flask-demo-app:${env.BUILD_ID}"
         customImage = ''
     }
 
