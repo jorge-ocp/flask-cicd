@@ -41,7 +41,7 @@ pipeline {
         stage('Buld Image') {
             steps {
                 script {
-                    sh "sudo docker build -t jocptwo/flask-demo-app:${env.BUILD_ID}"
+                    sh "sudo docker build -t jocptwo/flask-demo-app:${env.BUILD_ID} ."
                 }
             }
         }
