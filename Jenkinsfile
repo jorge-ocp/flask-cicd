@@ -27,12 +27,16 @@ pipeline {
                 success {
                     script {
                         sh 'sudo docker-compose down'
+                        sh 'LASTIMAGEID=$(sudo docker images | awk '{print $3}' | awk 'NR==2')'
+                        sh 'sudo docker rmi $LASTIMAGEID'
                     }
                 }
 
                 failure {
                     script {
                         sh 'sudo docker-compose down'
+                        sh 'LASTIMAGEID=$(sudo docker images | awk '{print $3}' | awk 'NR==2')'
+                        sh 'sudo docker rmi $LASTIMAGEID'
                     }
                 }
             }
@@ -49,7 +53,7 @@ pipeline {
         stage('Push to Registry'){
             steps {
                 script {
-                    docker.withRegistry('', 'dockerhub-cred') {
+                    docker.withRegistry('https://docker.hub.com', 'dockerhub-cred') {
                         MyImage.push()
 
                     }
