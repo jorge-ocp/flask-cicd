@@ -49,7 +49,7 @@ pipeline {
         stage('Push to Registry'){
             steps {
                 script {
-                    docker.withRegistry('', 'DockerHub') {
+                    docker.withRegistry('', 'dockerhub-cred') {
                         MyImage.push()
 
                     }
