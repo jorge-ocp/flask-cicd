@@ -38,10 +38,22 @@ pipeline {
             }
         }
 
-        stage('Buld Image') {
+        stage('Build Image') {
             steps {
                 script {
-                    sh "sudo docker build -t jocptwo/flask-demo-app:${env.BUILD_ID} ."
+                   MyImage = sh "sudo docker build -t jocptwo/flask-demo-app:${env.BUILD_ID} ."
+                }
+            }
+        }
+
+        stage('Push to Registry'){
+            steps {
+                script {
+                    docker.withRegistry('', 'DockerHub') {
+                        MyImage.push()
+
+                    }
+
                 }
             }
         }
