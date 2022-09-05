@@ -42,7 +42,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                   MyImage = sh "sudo docker build -t jocptwo/flask-demo-app:${env.BUILD_ID} ."
+                   sh "sudo docker build -t jocptwo/flask-demo-app:${env.BUILD_ID} ."
                 }
             }
         }
@@ -50,8 +50,9 @@ pipeline {
         stage('Push to Registry'){
             steps {
                 script {
-                    docker.withRegistry('https://docker.hub.com', 'dockerhub-cred') {
-                        MyImage.push()
+
+                    sh 'sudo docker login -u jocptwo --password-stdin https://docker.hub.com'
+                    sh "sudo docker push jocptwo/flask-demo-app:${env.BUILD_ID}"
 
                     }
 
