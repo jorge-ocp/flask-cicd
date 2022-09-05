@@ -51,7 +51,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernameColonPassword(credentialsId: 'dockerhub-cred', variable: 'dockerhub-cred')]) {
-                         sh "sudo docker push jocptwo/flask-demo-app:${env.BUILD_ID}"
+                        sh 'sudo docker login'
+                        sh "sudo docker push jocptwo/flask-demo-app:${env.BUILD_ID}"
                     }
 
                     
