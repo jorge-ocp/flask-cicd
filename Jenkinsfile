@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        imageName = "jocptwo/flask-demo-app:{env.BUILD_ID}"
+        imageName = "jocptwo/flask-demo-app:${env.BUILD_ID}"
         customImage = ''
     }
 
@@ -19,20 +19,20 @@ pipeline {
         stage('Run Tests'){
             steps {
                 script {
-                    sh 'pip3 install -r requirements.txt; python3 -m pytest test'
+                    sh 'pip3 install -r requirements.txt; python3 -m pytest app/test.py'
                 }
             }
 
             post {
                 success {
                     script {
-                        sh 'docker-compose down'
+                        sh 'sudo docker-compose down'
                     }
                 }
 
                 failure {
                     script {
-                        sh 'docker-compose down'
+                        sh 'sudo docker-compose down'
                     }
                 }
             }
@@ -41,7 +41,7 @@ pipeline {
         stage('Buld Image') {
             steps {
                 script {
-                    customImage = docker.build(imageName)
+                    sh "sudo docker build -t jocptwo/flask-demo-app:${env.BUILD_ID} ."
                 }
             }
         }
