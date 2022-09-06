@@ -1,7 +1,7 @@
 pipeline {
     environment {
         imageName = "jocptwo/flask-demo-app:${env.BUILD_ID}"
-        customImage = ''
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-cred')
     }
 
     agent any
@@ -50,10 +50,9 @@ pipeline {
         stage('Push to Registry'){
             steps {
                 script {
-                    withCredentials([usernameColonPassword(credentialsId: 'dockerhub-cred', variable: 'dockerhub-cred')]) {
-                        sh 'sudo docker login'
-                        sh "sudo docker push jocptwo/flask-demo-app:${env.BUILD_ID}"
-                    }
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
+                    sh "sudo docker push jocptwo/flask-demo-app:${env.BUILD_ID}"
+                    
 
                     
 
