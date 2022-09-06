@@ -50,7 +50,7 @@ pipeline {
         stage('Push to Registry'){
             steps {
                 script {
-                    sh "sudo docker login -u $DOCKER_CREDENTIALS_USR -p $DOCKER_CREDENTIALS_PSW"
+                    sh "sudo docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
                     sh "sudo docker push jocptwo/flask-demo-app:${env.BUILD_ID}"
                     
 
