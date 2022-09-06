@@ -1,7 +1,7 @@
 pipeline {
     environment {
         imageName = "jocptwo/flask-demo-app:${env.BUILD_ID}"
-        customImage = ''
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-cred')
     }
 
     agent any
@@ -33,16 +33,32 @@ pipeline {
                 failure {
                     script {
                         sh 'sudo docker-compose down'
+                        
                     }
                 }
             }
         }
 
-        stage('Buld Image') {
+        stage('Build Image') {
             steps {
                 script {
-                    sh "sudo docker build -t jocptwo/flask-demo-app:${env.BUILD_ID} ."
+                   sh "sudo docker build -t jocptwo/flask-demo-app:${env.BUILD_ID} ."
                 }
+            }
+        }
+
+        stage('Push to Registry'){
+            steps {
+                script {
+                    sh 'sudo docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}'
+                    sh "sudo docker push jocptwo/flask-demo-app:${env.BUILD_ID}"
+                    
+
+                    
+
+                }
+
+                
             }
         }
 
